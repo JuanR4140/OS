@@ -1,0 +1,3 @@
+# run = "nasm boot_sect.asm -f bin -o boot_sect.bin"
+# run = "bochs -f bochsrc.txt -q"
+run = "make run"
