@@ -3,6 +3,7 @@
 #include "kernel.h"
 #include "../libc/string.h"
 #include "../libc/mem.h"
+#include "../cpu/ports.h"
 #include <stdint.h>
 
 void kernel_main() {
@@ -68,8 +69,10 @@ void user_input(char *input){
     kprint_at("COLOR TEST\nRED", 35, 0);
   }else if(strcmp(input, "EXIT") == 0){
     clear_screen();
-    kprint_at("CPU suspended....\n", 35, 0);
-    asm volatile("hlt");
+    kprint_at("Shutting down..\n", 35, 0);
+    // kprint_at("CPU suspended....\n", 35, 0);
+    port_word_out(0xB004, 0x2000); // <-- BOCHS-SPECIFIC. DOES NOT WORK ON REAL HARDWARE.
+    // asm volatile("hlt");
     // asm volatile("jmp $0xAAAA,$0x0000");
   }else{
     kprint(input);
